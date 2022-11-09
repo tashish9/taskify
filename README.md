@@ -33,7 +33,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details. -->
 
-# Taskify
+# [Taskify](https://taskify-aehhbe999-tashish9.vercel.app/)
 
 Manage your teams & tasks easily
 
