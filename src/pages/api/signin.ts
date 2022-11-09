@@ -13,32 +13,3 @@ const signInHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default signInHandler;
-
-// export default async function handler(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-//   const token = localStorage.getItem("token");
-//   const isAuthenticated = await authenticateUserWithToken(token);
-
-//   if (!isAuthenticated) {
-//     localStorage.removeItem("token");
-//   }
-//   const isConnected = await connectDB();
-
-//   if (!isConnected) {
-//     res.status(500).end("DB error");
-//     return;
-//   }
-
-//   const userRepository = await AppDataSource.getRepository(User);
-
-//   const user = new User();
-
-//   user.firstName = "shub";
-//   user.lastName = "shub";
-
-//   const response = await userRepository.save(user);
-
-//   res.status(200).json(response);
-// }
