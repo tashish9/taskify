@@ -3,12 +3,24 @@ import TextField from "@mui/material/TextField";
 import { z } from "zod";
 import Autocomplete from "@mui/material/Autocomplete";
 import { sendRequest } from "../../utils/send-request";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import PrimaryButton from "../shared/buttons/primary-button";
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 import { Team } from "../../backend/db/team";
 import { SnackbarAction } from "../../utils/snackbar";
 import { handleError } from "../../utils/shared";
+import { useState } from "react";
+import { User } from "../../models/user";
 
 type Props = {
   open: boolean;
@@ -17,7 +29,27 @@ type Props = {
 };
 
 const CreateTeamDialog = ({ open, close, dispatchSnackBar }: Props) => {
+  const [usersList, setUsersList] = useState<User[]>([]);
   const queryClient = useQueryClient();
+
+  const { isLoading } = useQuery(
+    "users",
+    async () => {
+      return sendRequest({
+        endpoint: "/api/users",
+      });
+    },
+    {
+      refetchInterval: 10000,
+      onSuccess: (data) => {
+        setUsersList(data);
+      },
+      onError: (err: Error) => {
+        handleError(err, dispatchSnackBar);
+      },
+    }
+  );
+
   const addTeamValidationSchema = z.object({
     title: z.string().min(1, "This field is required"),
     description: z.string().min(1, "This field is required"),
@@ -108,25 +140,24 @@ const CreateTeamDialog = ({ open, close, dispatchSnackBar }: Props) => {
             }
             helperText={formik.touched.description && formik.errors.description}
           />
-          <Autocomplete
-            freeSolo
-            multiple
-            autoSelect
-            id="teamMembers"
-            options={[]}
-            value={formik.values.teamMembers}
-            onChange={(_, v) => {
-              formik.setFieldValue("teamMembers", v);
-            }}
-            onBlur={formik.handleBlur}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Team Members"
-                placeholder="Type member name and press enter"
-              />
-            )}
-          />
+          <FormControl>
+            <InputLabel id="demo-multiple-name-label">Team Members</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              multiple
+              name="teamMembers"
+              value={formik.values.teamMembers}
+              onChange={formik.handleChange}
+              input={<OutlinedInput label="Name" />}
+            >
+              {usersList.map((user) => (
+                <MenuItem key={user._id} value={user._id}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <div className="flex w-full justify-end gap-8 p-2 ">
             <Button
               type="button"

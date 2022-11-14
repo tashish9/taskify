@@ -1,14 +1,13 @@
-import { Formik } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import PrimaryButton from "../../components/shared/buttons/primary-button";
 import CreateTaskDialog from "../../components/teams/create-task-dialog";
 import TasksTable from "../../components/teams/tasks-table";
-import { Team } from "../../backend/db/team";
 import { sendRequest } from "../../utils/send-request";
 import AlertSnackbar from "../../components/shared/alert-snackbar";
 import { snackbarDataReducer, initialSnackBarData } from "../../utils/snackbar";
+import { Team } from "../../models/team";
 
 const TeamPage = () => {
   const queryClient = useQueryClient();
@@ -20,6 +19,8 @@ const TeamPage = () => {
   const [team, setTeam] = useState<Team>({} as Team);
   const router = useRouter();
   const { teamId } = router.query;
+
+  console.log(team);
 
   const { isLoading } = useQuery(
     `team ${teamId}`,

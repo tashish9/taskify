@@ -16,12 +16,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-/*
-! Teams 
-  -> Add a team
-? Team 
-  -> Add a member
-  -> Add a task & assign it to user
-  -> view & update all tasks
-*/

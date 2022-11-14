@@ -8,7 +8,7 @@ export const formatDate = (dateString: string): string => {
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  return `${day}/${month}/${year}`;
+  return `${day}/${month + 1}/${year}`;
 };
 
 export const handleError = (

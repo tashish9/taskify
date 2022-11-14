@@ -10,11 +10,12 @@ export const sendRequest = async (data: RequestArgs): Promise<any> => {
     method: data.method ? data.method : "GET",
     body: data.body ? JSON.stringify(data.body) : null,
   };
-  const response = await fetch(data.endpoint, RequestMetaData);
-  if (!response.ok) {
-    throw new Error(response.statusText);
+  const response = await fetch(
+    `http://localhost:8888${data.endpoint}`,
+    RequestMetaData
+  );
+  if (response.ok) {
+    return response.json();
   }
-  const receivedData = await response.json();
-
-  return receivedData;
+  throw new Error(response.statusText);
 };

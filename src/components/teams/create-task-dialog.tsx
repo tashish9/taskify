@@ -14,11 +14,12 @@ import { useFormik } from "formik";
 import React from "react";
 import { UseMutationResult } from "react-query";
 import { TaskStatus } from "../../backend/db/task";
+import { User } from "../../models/user";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  teamMembers: string[];
+  teamMembers: User[];
   addTask: UseMutationResult<any, unknown, any, unknown>;
 };
 
@@ -31,7 +32,6 @@ const CreateTaskDialog = ({
   const formik = useFormik({
     initialValues: {
       name: "",
-      properties: "",
       description: "",
       dueDate: "",
       assignee: "",
@@ -68,22 +68,6 @@ const CreateTaskDialog = ({
             onBlur={formik.handleBlur}
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}
-          />
-          <TextField
-            required
-            fullWidth
-            margin="dense"
-            id="properties"
-            label="Properties"
-            name="properties"
-            variant="standard"
-            value={formik.values.properties}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.properties && Boolean(formik.errors.properties)
-            }
-            helperText={formik.touched.properties && formik.errors.properties}
           />
           <TextField
             required
@@ -131,8 +115,8 @@ const CreateTaskDialog = ({
             >
               {teamMembers.map((el) => {
                 return (
-                  <MenuItem key={el} value={el}>
-                    {el}
+                  <MenuItem key={el._id} value={el.username}>
+                    {el.username}
                   </MenuItem>
                 );
               })}

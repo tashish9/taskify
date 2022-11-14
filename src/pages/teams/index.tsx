@@ -24,10 +24,9 @@ const TeamsPage = () => {
   const { isLoading } = useQuery(
     "teams",
     async () => {
-      const data = await sendRequest({
+      return sendRequest({
         endpoint: "/api/teams",
       });
-      return data.teams;
     },
     {
       refetchInterval: 10000,

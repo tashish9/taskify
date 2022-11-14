@@ -1,9 +1,9 @@
-import { Task } from "../../backend/db/task";
 import { formatDate } from "../../utils/shared";
 import { BiEditAlt } from "react-icons/bi";
 import { useState } from "react";
 import UpdateTaskDialog from "./update-task-dialog";
 import { SnackbarAction } from "../../utils/snackbar";
+import { Task } from "../../models/task";
 
 const TasksTableRow = ({
   task,
@@ -25,7 +25,7 @@ const TasksTableRow = ({
         </td>
         <td className=" w-[30rem] text-ellipsis border-b border-gray-200 p-5">
           <p className="max-w-sm text-ellipsis break-all text-gray-900">
-            {task.properties}
+            {task.description}
           </p>
         </td>
         <td className=" border-b border-gray-200 bg-white p-5">

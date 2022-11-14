@@ -12,7 +12,7 @@ import {
 import { useFormik } from "formik";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Task, TaskStatus } from "../../backend/db/task";
+import { Task, TaskStatus } from "../../models/task";
 import { sendRequest } from "../../utils/send-request";
 import { handleError } from "../../utils/shared";
 import { SnackbarAction } from "../../utils/snackbar";
@@ -64,16 +64,18 @@ const UpdateTaskDialog = ({
   const formik = useFormik({
     initialValues: {
       name: task.name,
-      properties: task.properties,
+      description: task.description,
       status: task.status,
     },
     onSubmit: (values, { resetForm }) => {
       const taskData = Object.assign({}, task, values);
+
       updateTask.mutate(taskData);
       resetForm();
       close(false);
     },
   });
+
   return (
     <Dialog open={open} fullWidth>
       <DialogTitle>Update Task</DialogTitle>
@@ -96,16 +98,16 @@ const UpdateTaskDialog = ({
             fullWidth
             multiline
             rows={4}
-            id="properties"
-            label="Properties"
-            name="properties"
-            value={formik.values.properties}
+            id="description"
+            label="Description"
+            name="description"
+            value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.touched.properties && Boolean(formik.errors.properties)
+              formik.touched.description && Boolean(formik.errors.description)
             }
-            helperText={formik.touched.properties && formik.errors.properties}
+            helperText={formik.touched.description && formik.errors.description}
           />
           <FormControl fullWidth>
             <InputLabel id="status-label">Status</InputLabel>

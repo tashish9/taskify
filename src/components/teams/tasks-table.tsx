@@ -23,7 +23,7 @@ const TasksTable = ({ tasks, teamId, dispatchSnackBar }: Props) => {
         <thead>
           <tr>
             <HeadRowData> Name</HeadRowData>
-            <HeadRowData> Properties</HeadRowData>
+            <HeadRowData> Description</HeadRowData>
             <HeadRowData> Due Date</HeadRowData>
             <HeadRowData> Assignee</HeadRowData>
             <HeadRowData> Status</HeadRowData>
